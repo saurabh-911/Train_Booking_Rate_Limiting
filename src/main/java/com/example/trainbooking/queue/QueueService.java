@@ -101,8 +101,11 @@ public class QueueService {
         }
 
         String token = UUID.randomUUID().toString();
-        redisTemplate.opsForValue().set(key, token, 30, TimeUnit.SECONDS);
-        return token;
+        Boolean created = redisTemplate.opsForValue().setIfAbsent(key, token, 30, TimeUnit.SECONDS);
+        if (Boolean.TRUE.equals(created)) {
+            return token;
+        }
+        return redisTemplate.opsForValue().get(key);
     }
 
     private double calculateScore(String userTier) {
