@@ -40,7 +40,8 @@ public class AdaptiveConcurrencyFilter extends OncePerRequestFilter {
         boolean success = false;
         try {
             filterChain.doFilter(request, response);
-            success = response.getStatus() < 500;
+            success = response.getStatus() < 400;
+        }
         } finally {
             long latency = Duration.between(start, Instant.now()).toMillis();
             controller.releaseAndRecord(latency, success);
