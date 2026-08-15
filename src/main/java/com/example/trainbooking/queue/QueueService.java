@@ -50,7 +50,8 @@ public class QueueService {
 
         if (admitted) {
             String token = issueOrGetQueueToken(userId);
-            return new QueueStatusResponse(userId, 0L, 0L, true, token, 30L);
+            Long ttl = redisTemplate.getExpire(TOKEN_PREFIX + userId, TimeUnit.SECONDS);
+            return new QueueStatusResponse(userId, 0L, 0L, true, token, ttl == null ? 0L : Math.max(0L, ttl));
         }
         if (rank == null) {
             return new QueueStatusResponse(userId, -1L, 0L, false, null, 0L);
