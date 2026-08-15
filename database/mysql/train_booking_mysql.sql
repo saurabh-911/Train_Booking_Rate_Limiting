@@ -1,6 +1,6 @@
 -- =============================================================
 -- Train Booking System - Production-grade MySQL schema + dataset
--- Compatible with Spring Boot JPA (InnoDB, FK constraints, indexes)
+-- Reference schema (may require alignment with the current Spring Boot JPA entity mappings)
 -- =============================================================
 
 CREATE DATABASE IF NOT EXISTS train_booking

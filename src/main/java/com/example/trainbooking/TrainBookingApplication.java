@@ -6,7 +6,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @SpringBootApplication
-@EnableTransactionManagement
 public class TrainBookingApplication {
 
     public static void main(String[] args) {

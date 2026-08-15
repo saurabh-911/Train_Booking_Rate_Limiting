@@ -7,6 +7,8 @@ public record BookingRequest(
         @NotBlank String userId,
         @NotNull Long seatId,
         @NotBlank String trainId,
-        @NotBlank String idempotencyKey
+        @NotBlank String idempotencyKey,
+        String queueToken,
+        String userTier
 ) {
 }
