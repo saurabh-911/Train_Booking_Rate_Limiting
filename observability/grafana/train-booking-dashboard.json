@@ -1,0 +1,41 @@
+{
+  "title": "Train Booking Control Plane",
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "panels": [
+    {
+      "title": "Virtual Queue Size",
+      "type": "timeseries",
+      "targets": [
+        {"expr": "booking_queue_size", "legendFormat": "queue"}
+      ]
+    },
+    {
+      "title": "Adaptive Concurrency Limit",
+      "type": "timeseries",
+      "targets": [
+        {"expr": "booking_adaptive_limit", "legendFormat": "limit"},
+        {"expr": "booking_inflight", "legendFormat": "inflight"}
+      ]
+    },
+    {
+      "title": "Booking Success vs Failure",
+      "type": "timeseries",
+      "targets": [
+        {"expr": "rate(booking_success_count[1m])", "legendFormat": "success/s"},
+        {"expr": "rate(booking_failed_count[1m])", "legendFormat": "failed/s"}
+      ]
+    },
+    {
+      "title": "HTTP p95 latency /book-ticket",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket{uri=\"/api/book-ticket\"}[2m])) by (le))",
+          "legendFormat": "p95"
+        }
+      ]
+    }
+  ]
+}

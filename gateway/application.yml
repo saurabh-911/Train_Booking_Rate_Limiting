@@ -1,0 +1,16 @@
+# Layer-1 (Gateway) reference config for a dedicated Spring Cloud Gateway deployment.
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: booking-service
+          uri: http://booking-service:8080
+          predicates:
+            - Path=/api/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                redis-rate-limiter.requestedTokens: 1
+                key-resolver: "#{@userKeyResolver}"
